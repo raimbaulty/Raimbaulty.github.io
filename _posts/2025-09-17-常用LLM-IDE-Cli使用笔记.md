@@ -145,6 +145,25 @@ claude
 
 
 
+## iFlow-CLI
+
+[官方仓库](https://github.com/iflow-ai/iflow-cli)，[官方文档](https://platform.iflow.cn/cli/quickstart)，[注册地址](https://iflow.cn/)
+
+安装
+
+```bash
+npm i -g @iflow-ai/iflow-cli
+```
+
+运行
+
+```bash
+cd /path/to/the/project
+iflow
+```
+
+
+
 ## 参考链接
 
 - [codex配置文件](https://linux.do/t/topic/943034) 
