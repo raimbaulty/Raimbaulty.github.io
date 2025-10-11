@@ -3,7 +3,7 @@ layout: mypost
 title: iOS 使用 SideStore 自签
 date: 2025-09-23
 published: True
-categories: 手机
+categories: iOS
 tags: 
  - sidestore
 ---
@@ -68,7 +68,7 @@ tags:
 ## 插件
 
 1. [点击下载 LiveContainer](https://github.com/LiveContainer/LiveContainer/releases/latest/download/LiveContainer.ipa)
-2. 在 SideStore 中点击 My Apps，然后点击左上角 +，打开下载的 IPA 安装，注意刷新前连接 WIFI 并打开 StosVPN 否则会失败
+2. 在 SideStore 中点击 My Apps，然后点击左上角 +，打开下载的 IPA 安装，注意安装前连接 WIFI 并打开 StosVPN 否则会失败
 
 3. 安装完成后打开 LiveContariner，点击 设置，点击 **从 SiderStore 导入证书**
 
@@ -76,8 +76,7 @@ tags:
 
 
 
-
-## 快截指令
+## 快捷指令
 
 1. 在苹果设备打开快捷指令，点击右上角 + 新建快捷指令
 
