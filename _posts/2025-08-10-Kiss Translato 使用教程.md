@@ -32,6 +32,147 @@ tags:
 
 
 
+### 接入 SiliconFlow
+
+点击拓展图标进入设置，依次点击 **接口设置** → **OpenAI**
+
+- **URL**
+
+  `https://api.siliconflow.cn/v1/chat/completions`
+
+- **KEY**
+
+  自行前往硅基流动控制台获取
+
+- **MODEL**
+
+  `Qwen/Qwen3-Next-80B-A3B-Instruct`
+
+其余选项保持默认即可
+
+
+
+### 接入通义千问
+
+点击拓展图标进入设置，依次点击 **接口设置** → **OpenAI**
+
+- **URL**
+
+  `https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions`
+
+- **KEY**
+
+  自行前往通义千问控制台获取
+
+
+- **MODEL**
+
+  `qwen3-next-80b-a3b-instruct`
+
+其余选项保持默认即可
+
+
+
+### 接入火山引擎
+
+点击拓展图标进入设置，依次点击 **接口设置** → **OpenAI**
+
+- **URL**
+
+  `https://ark.cn-beijing.volces.com/api/v3/chat/completions`
+
+- **KEY**
+
+  自行前往火山引擎控制台获取
+
+
+- **MODEL**
+
+  `doubao-seed-1-6-flash-250828`
+
+点击 **更多**，自定义body参数填写
+
+```text
+"thinking":{
+     "type":"disabled"
+ }
+```
+
+其余选项保持默认即可
+
+
+
+### 接入 Reka
+
+点击拓展图标进入设置，依次点击 **接口设置** → **Custom**
+
+- **URL**
+
+  `https://api.reka.ai/v1/chat`
+
+- **KEY**
+
+  [点击前往获取](https://platform.reka.ai/apikeys)
+
+
+- **MODEL**
+
+  `reka-flash`
+
+- **Request Hook**
+
+  ```text
+  async (args) => {
+    const url = args.url;
+    const method = "POST";
+    const headers = {
+      "Content-type": "application/json",
+      "X-Api-Key": args.key
+    };
+    const body = {
+      model: args.model,
+      messages: [
+        {
+          role: "user",
+          content: args.systemPrompt,
+        },
+        {
+          role: "assistant",
+          content: "",
+        },      
+        {
+          role: "user",
+          content: JSON.stringify({
+            targetLanguage: args.to,
+            segments: args.texts.map((text, id) => ({ id, text })),
+            glossary: {},
+          }),
+        },
+      ],
+      temperature: args.temperature,
+      max_tokens: args.maxTokens,
+      stream: false,
+    };
+  
+    return { url, body, headers, method };
+  };
+  ```
+
+- **Response Hook**
+
+  ```text
+  async ({ res, parseAIRes }) => {
+    const translations = parseAIRes(res?.responses?.[0]?.message?.content);
+    return { translations };
+  };
+  ```
+
+其余选项保持默认即可
+
+---
+
+**注意：以下为v1.x.x旧版配置**
+
 ### 接入 Z.AI
 
 点击拓展图标进入设置，依次点击 **接口设置** → **Custom**
@@ -108,128 +249,6 @@ tags:
 
 
 
-### 接入 SiliconFlow
-
-点击拓展图标进入设置，依次点击 **接口设置** → **OpenAI**
-
-- **URL**
-
-  `https://api.siliconflow.cn/v1/chat/completions`
-
-- **KEY**
-
-  `sk-********************`
-
-- **MODEL**
-
-  `THUDM/GLM-4-9B-0414`
-
-- **SYSTEM PROMPT**
-
-```tex
-你是一位专业的翻译助手，擅长根据上下文理解原文的用语风格（情感、语气），并且准确地在 {{to}} 中再现这种风格。
-
-  ## 翻译要求
-
-  1. 语言风格：根据**原文内容和上下文**，灵活采用不同风格。如文档采用严谨风格、论坛采用口语化风格、嘲讽采用阴阳怪气风格等。
-  2. 用词选择：不要生硬地逐词直译，而是采用 {{to}} 的地道用词（如成语、网络用语）。
-  3. 句法选择：不要追求逐句翻译，应该调整语句大小和语序，使之更符合 {{to}} 表达习惯。
-  4. 标点用法：根据表达习惯的不同，准确地使用（包括添加、修改）标点符号。
-  5. 格式保留：只翻译原文中的文本内容，无法翻译的内容需要保持**原样**，对于翻译内容也不要额外添加格式。
-  6.**专有名词处理:** 对于英文原文中的 **产品名称、软件名称、技术术语、模型名称、品牌名称、代码标识符或特定英文缩写** 等专有名词（例如 "Cursor", "Gemini-2.5-pro-exp", "VS Code", "API", "GPT-4"），**必须保留其原始英文形式，不进行翻译**。请将这些英文术语自然地嵌入到流畅的中文译文中。 * **重要示例:** 如果原文是 "Add Gemini-2.5-pro-exp to Cursor"，一个好的翻译应该是像 “快把 Gemini-2.5-pro-exp 加到 Cursor 里试试！” 或 “推荐将 Gemini-2.5-pro-exp 集成到 Cursor 中”，**绝不能** 翻译 "Cursor" 或 "Gemini-2.5-pro-exp"。
-
-  ## 可选网页上下文信息 (如有，请参考以提升翻译质量):
-
-    {{title_prompt}} (网页标题，例如: “网页标题: Cursor 用户评价”)
-    {{summary_prompt}} (网页上下文摘要，例如: “网页摘要: 本文总结用户对 Cursor 编辑器的正面评价…”)
-    {{terms_prompt}} (相关专业术语，例如: “专业术语: IDE, 代码编辑器, AI 助手…”)
-```
-
-- **USER PROMPT**
-
-```tex
-请将下方的原文从 {{from}} 翻译到 {{to}}。翻译每段文本时，请直接输出翻译内容，不要有任何额外文本。
-
-原文: {{text}}
-
-译文: 
-```
-
-其余选项保持默认即可
-
-
-
-### 接入 Reka
-
-点击拓展图标进入设置，依次点击 **接口设置** → **Custom**
-
-- **URL**
-
-  `https://api.reka.ai/v1/chat`
-
-- **KEY**
-
-  [点击前往获取](https://platform.reka.ai/apikeys)
-
-- **Request Hook**
-
-  ```tex
-  (text, from, to, url, key, title_prompt="", summary_prompt="", terms_prompt="") => [url, {
-    "method": "POST",
-    "headers": {
-      "Content-type": "application/json",
-      "X-Api-Key": key
-    },
-    "body": JSON.stringify({
-    	"stream": false,
-    	"model": "reka-flash",
-    	"messages": [
-    		{
-    			"role":"user",
-    			"content": `
-  你是一位专业的翻译助手，擅长根据上下文理解原文的用语风格（情感、语气），并且准确地在 {{to}} 中再现这种风格。
-  
-  ## 翻译要求
-  
-  1. 语言风格：根据**原文内容和上下文**，灵活采用不同风格。如文档采用严谨风格、论坛采用口语化风格、嘲讽采用阴阳怪气风格等。
-  2. 用词选择：不要生硬地逐词直译，而是采用 {{to}} 的地道用词（如成语、网络用语）。
-  3. 句法选择：不要追求逐句翻译，应该调整语句大小和语序，使之更符合 {{to}} 表达习惯。
-  4. 标点用法：根据表达习惯的不同，准确地使用（包括添加、修改）标点符号。
-  5. 格式保留：只翻译原文中的文本内容，无法翻译的内容需要保持**原样**，对于翻译内容也不要额外添加格式。
-  6. **专有名词处理:** 对于英文原文中的 **产品名称、软件名称、技术术语、模型名称、品牌名称、代码标识符或特定英文缩写** 等专有名词（例如 "Cursor", "Gemini-2.5-pro-exp", "VS Code", "API", "GPT-4"），**必须保留其原始英文形式，不进行翻译**。请将这些英文术语自然地嵌入到流畅的中文译文中。
-     * **重要示例:** 如果原文是 "Add Gemini-2.5-pro-exp to Cursor"，一个好的翻译应该是像 “快把 Gemini-2.5-pro-exp 加到 Cursor 里试试！” 或 “推荐将 Gemini-2.5-pro-exp 集成到 Cursor 中”，**绝不能** 翻译 "Cursor" 或 "Gemini-2.5-pro-exp"。
-  
-  ## 可选网页上下文信息 (如有，请参考以提升翻译质量):
-  
-  ${title_prompt ? "网页标题: " + title_prompt : ""}
-  ${summary_prompt ? "网页摘要: " + summary_prompt : ""}
-  ${terms_prompt ? "专业术语: " + terms_prompt : ""}
-  
-  请将下方的原文从 ${from} 翻译到 ${to}。翻译每段文本时，请直接输出翻译内容，不要有任何额外文本。
-  
-  原文: ${text}
-  
-  译文:
-  `
-    		}
-    	]
-    })
-  }]
-  ```
-
-- **Response Hook**
-
-  ```text
-  (res, text, from, to) => [
-    res.responses?.[0]?.message?.content ?? "",
-    false
-  ]
-  ```
-
-其余选项保持默认即可
-
-
-
 ### 接入 Gemini
 
 **注意：Free 层级不适用，请使用更高层级**
@@ -287,83 +306,6 @@ tags:
 
 
 
-### 接入火山引擎
-
-点击拓展图标进入设置，依次点击 **接口设置** → **Custom**
-
-- **URL**
-
-  `https://ark.cn-beijing.volces.com/api/v3/chat/completions`
-
-- **KEY**
-
-  自行前往火山引擎控制台获取
-
-- **Request Hook**
-
-  ```tex
-  (text, from, to, url, key, title_prompt="", summary_prompt="", terms_prompt="") => [url, {
-    "method": "POST",
-    "headers": {
-      "Content-type": "application/json",
-      "Authorization": `Bearer ${key}`
-    },
-    "body": JSON.stringify({
-      "model": "doubao-seed-1-6-flash-250828",
-      "thinking":{
-           "type":"disabled"
-       },
-      "messages": [
-    		{
-    			"role":"system",
-    			"content": `
-  你是一位专业的翻译助手，擅长根据上下文理解原文的用语风格（情感、语气），并且准确地在 {{to}} 中再现这种风格。
-  
-  ## 翻译要求
-  
-  1. 语言风格：根据**原文内容和上下文**，灵活采用不同风格。如文档采用严谨风格、论坛采用口语化风格、嘲讽采用阴阳怪气风格等。
-  2. 用词选择：不要生硬地逐词直译，而是采用 {{to}} 的地道用词（如成语、网络用语）。
-  3. 句法选择：不要追求逐句翻译，应该调整语句大小和语序，使之更符合 {{to}} 表达习惯。
-  4. 标点用法：根据表达习惯的不同，准确地使用（包括添加、修改）标点符号。
-  5. 格式保留：只翻译原文中的文本内容，无法翻译的内容需要保持**原样**，对于翻译内容也不要额外添加格式。
-  6. **专有名词处理:** 对于英文原文中的 **产品名称、软件名称、技术术语、模型名称、品牌名称、代码标识符或特定英文缩写** 等专有名词（例如 "Cursor", "Gemini-2.5-pro-exp", "VS Code", "API", "GPT-4"），**必须保留其原始英文形式，不进行翻译**。请将这些英文术语自然地嵌入到流畅的中文译文中。
-     * **重要示例:** 如果原文是 "Add Gemini-2.5-pro-exp to Cursor"，一个好的翻译应该是像 “快把 Gemini-2.5-pro-exp 加到 Cursor 里试试！” 或 “推荐将 Gemini-2.5-pro-exp 集成到 Cursor 中”，**绝不能** 翻译 "Cursor" 或 "Gemini-2.5-pro-exp"。
-  
-  ## 可选网页上下文信息 (如有，请参考以提升翻译质量):
-  
-  ${title_prompt ? "网页标题: " + title_prompt : ""}
-  ${summary_prompt ? "网页摘要: " + summary_prompt : ""}
-  ${terms_prompt ? "专业术语: " + terms_prompt : ""}
-  `
-    		},
-    		{
-    			"role": "user",
-    			"content": `
-  请将下方的原文从 ${from} 翻译到 ${to}。翻译每段文本时，请直接输出翻译内容，不要有任何额外文本。
-  
-  原文: ${text}
-  
-  译文:
-  `
-    		}
-    	]
-    })
-  }]
-  ```
-
-- **Response Hook**
-
-  ```text
-  (res, text, from, to) => [
-    res.choices?.[0]?.message?.content ?? "", 
-    false
-  ]
-  ```
-
-其余选项保持默认即可
-
-
-
 ### 接入通义千问
 
 点击拓展图标进入设置，依次点击 **接口设置** → **Custom**
@@ -375,6 +317,7 @@ tags:
 - **KEY**
 
   自行前往通义千问控制台获取
+
 
 - **Request Hook**
 
@@ -430,7 +373,7 @@ tags:
 
   ```text
   (res, text, from, to) => [
-    res?.choices?.[0]?.message?.content ?? "", 
+    res?.data?.choices?.[0]?.message?.content ?? "",
     false
   ]
   ```
@@ -634,3 +577,5 @@ transition: all 0.2s ease-in-out;
 - [小改了下 Kiss Translator 的默认 Prompt，堪堪能用 ](https://linux.do/t/topic/853095)
 
 - [自定义接口示例](https://github.com/fishjar/kiss-translator/blob/master/custom-api.md)
+
+- [自定义接口实例V2](https://github.com/fishjar/kiss-translator/blob/master/custom-api_v2.md)

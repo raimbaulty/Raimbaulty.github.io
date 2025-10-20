@@ -29,13 +29,13 @@ tags:
 ## 安装
 
 1. [点击下载 Side Store](https://github.com/SideStore/SideStore/releases/latest/download/SideStore.ipa)
-2. 打开爱思助手，使用数据线连接手机和电脑，在手机上信任
+2. 打开爱思助手，使用数据线连接苹果设备和电脑并在苹果设备上确认
 
 3. 爱思助手切换到 **工具箱** 菜单，找到高级工具下的 **IPA 文件签名** 点击进入
 
 4. 点击 **添加 IPA 文件**，选择下载的 `SideStore.ipa` 文件
 
-5. 点击 **Apple ID 签名** → **添加 ID**，输入 Apple ID 和登录密码点击确定
+5. 点击 **Apple ID 签名** → **添加 ID**，输入 Apple ID 和登录密码点击确定，注意要和苹果设备登录AppleID的一致
 
 6. 勾选添加的 ipa 文件和 Apple ID 后点击 **立即签名**
 
@@ -50,13 +50,13 @@ tags:
 
 1. [点击下载 JitterBugPair 并解压缩](https://github.com/osy/Jitterbug/releases/latest/download/jitterbugpair-win64.zip)	
 
-2. 确保苹果设备解锁并打开主屏幕，在解压缩目录顶部输入cmd并回车打开终端
+2. 确保苹果设备解锁，然后在解压缩目录顶部输入cmd并回车打开终端
 
 3. 在终端中输入 j 并按 Tab 键补全后回车，出现 Success 表示成功在解压缩目录中生成配对文件
 
-4. 使用局域网传输工具将配对文件下载到手机，这里提供一个临时文件中转站：[FF2A FILE](https://file.ff2a.com)，建议使用Edge浏览器下载
+4. 使用局域网传输工具将配对文件下载到苹果设备，这里提供一个临时文件中转站：[FF2A FILE](https://file.ff2a.com)，建议使用Edge浏览器下载
 
-5. 打开 SideStore，根据提示打开配对文件，如果使用Edge，只需要点击左上角回退，然后进入 Edge 目录下的 Download 子目录
+5. 打开 SideStore，根据提示打开配对文件，如果使用Edge下载，文件位于 /Edge/Download
 
 6. 在 SideStore 中登录 Apple ID 后就可以在 My Apps 刷新证书了，注意刷新前连接 WIFI 并打开 StosVPN 否则会失败
 
@@ -78,17 +78,9 @@ tags:
 
 ## 快捷指令
 
-1. 在苹果设备打开快捷指令，点击右上角 + 新建快捷指令
+[点击链接](https://www.icloud.com/shortcuts/7f5c54917b814bc1a3cced41ccfe7268) 获取快捷指令并可自行添加到主屏幕
 
-2. 搜索 VPN 并选择 **设定VPN**，点击蓝色 **VPN** 字段，选择 **StosVPN**
-
-3. 搜索 Refresh 并选择 **Refresh All Apps**
-
-4. 搜索 VPN 并选择 **设定VPN**，点击蓝色 **连接** 字段，选择 **断开连接**，接着点击蓝色 **VPN** 字段，选择 **StosVPN**
-
-5. 在顶部点击 设定 VPN →  重新命名，重命名为你想要的短语，如 **刷新证书**
-
-6. 然后点击 **添加到主屏幕** 添加到主屏幕使用，也可通过 Siri 调用但调用成功率不高
+推荐添加自动化在特定时间自动执行
 
 
 
