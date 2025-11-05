@@ -263,6 +263,8 @@ tags:
 
   LINUXDO [Reno](https://linux.do/u/reno) 提供的代理网关：`api.ff2a.live/gemini`，搭建方法： [EdgeOne 代理加速 LLM API](https://pdf.us.kg/posts/2025/07/25/EdgeOne-%E4%BB%A3%E7%90%86.html)
 
+  LINUXDO [Clancy](https://linux.do/u/clancy) 提供的代理网关：`api.aizasy.com`，搭建方法：[[内测]Gemini代理API](https://linux.do/t/topic/1058226)
+
 - **KEY**
 
   [点击前往获取](https://aistudio.google.com/apikey)
