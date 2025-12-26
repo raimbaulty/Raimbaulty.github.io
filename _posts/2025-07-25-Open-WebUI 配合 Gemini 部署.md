@@ -114,7 +114,7 @@ services:
     networks:
       - open-webui
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql
 
   uni-api:
     image: yym68686/uni-api:latest
@@ -128,7 +128,7 @@ services:
       - ./api.yaml:/home/api.yaml
 
   open-webui:
-    image: yunxinc/study:custom-openwebui-0.6.18
+    image: ghcr.io/open-webui/open-webui:main
     user: 1000:1000    
     container_name: open-webui
     restart: always
@@ -172,7 +172,7 @@ services:
       - IMAGE_SIZE=1024x1024 
       - ENABLE_OAUTH_SIGNUP=True
       - OAUTH_PROVIDER_NAME=LINUX DO
-      - OPENID_PROVIDER_URL=https://raw.githubusercontent.com/Raimbaulty/open-webui/main/openid-configuration
+      - OPENID_PROVIDER_URL=https://connect.linux.do/.well-known/openid-configuration
       - OAUTH_CLIENT_ID=********************
       - OAUTH_CLIENT_SECRET=****************
       - ENABLE_OLLAMA_API=False
@@ -276,7 +276,7 @@ volumes:
 
 - Gemini 关闭思考
 
-  `https://raw.githubusercontent.com/Raimbaulty/open-webui/main/functions/think`
+  `https://raw.githubusercontent.com/Raimbaulty/open-webui/main/functions/nothink`
 
   
 

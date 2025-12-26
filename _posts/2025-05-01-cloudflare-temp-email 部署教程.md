@@ -9,8 +9,6 @@ tags:
  - mail
 ---
 
-# cloudflare-temp-email 部署教程
-
 ## 项目介绍
 
 https://github.com/dreamhunter2333/cloudflare_temp_email
@@ -19,7 +17,7 @@ https://github.com/dreamhunter2333/cloudflare_temp_email
 
 ## 创建数据库
 
-登录 Cloudflare，依次点击左侧菜单 **存储和数据库** → **D1 SQL 数据库** → **创建**，名称输入 `cloudflare_temp_email` 后点击创建
+登录 Cloudflare，[点击](https://dash.cloudflare.com/?to=/:account/workers/d1/create) 创建，名称输入 `cloudflare_temp_email` 后点击创建
 
 接着切换到 **控制台** 标签，右键打开 [schema.sql](https://raw.githubusercontent.com/dreamhunter2333/cloudflare_temp_email/main/db/schema.sql) 后复制所有内容粘贴到输入框，最后点击 **执行** 完成创建
 
@@ -29,7 +27,7 @@ https://github.com/dreamhunter2333/cloudflare_temp_email
 
 ## 创建 Pages
 
-依次点击左侧菜单 **计算（Workers）**→  **Workers and Pages** → **创建**，切换到 **Pages** 标签并点击 **上传资产**
+[点击](https://dash.cloudflare.com/?to=/:account/workers-and-pages/create/pages) 创建，并点击 **拖放文件** 后的 开始使用
 
 项目名称输入 `cloudflare-temp-email` 后点击 **创建项目**，接着点击上传上一步下载的 `frontend.zip` 后点击 **部署站点** 完成部署
 

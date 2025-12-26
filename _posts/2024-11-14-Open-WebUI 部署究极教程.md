@@ -117,7 +117,7 @@ tags:
         networks:
           - backend
         volumes:
-          - pgdata:/var/lib/postgresql/data
+          - pgdata:/var/lib/postgresql
     
       nginx:
         image: nginx:latest
@@ -209,7 +209,7 @@ tags:
           - MICROSOFT_CLIENT_TENANT_ID=*****************************
           # OIDC设置
           - OAUTH_PROVIDER_NAME=LINUX DO
-          - OPENID_PROVIDER_URL=https://raw.githubusercontent.com/Raimbaulty/open-webui/main/openid-configuration
+          - OPENID_PROVIDER_URL=https://connect.linux.do/.well-known/openid-configuration
           - OAUTH_CLIENT_ID=****************************************
           - OAUTH_CLIENT_SECRET=************************************      
           # Ollama设置
